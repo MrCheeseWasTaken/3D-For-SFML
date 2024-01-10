@@ -291,6 +291,8 @@ int main()
 
 [Opengl/glad](https://www.opengl.org) | [Here's where I got the download](https://glad.dav1d.de)
 
+[OBJ-Loader by Bly7](https://github.com/Bly7/OBJ-Loader)
+
 [Glm](https://glm.g-truc.net/0.9.9/index.html)
 
 [Maxwell the Cat(Creative Commons)](https://sketchfab.com/3d-models/maxwell-the-cat-dingus-2ca7f3c1957847d6a145fc35de9046b0)
