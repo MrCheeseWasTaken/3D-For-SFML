@@ -29,6 +29,7 @@ You can include the library as so
 before doing **anything**, please create a RenderWindow3D as this will setup opengl for 3D.
 
 (Note) RenderWindow3D and RenderTarget3D inherit from their 2D counterparts so they can still be used to draw 2D stuff. They are also initialised in the same way
+
 You will also have to create a bool variable that will be used for the main loop as window.isOpen() will cause some errors when closing the window
 
 ```cpp
