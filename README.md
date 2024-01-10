@@ -200,3 +200,85 @@ int main()
     return 0;
 }
 ```
+
+## Rendertextures as textures
+
+As the 3D objects take in textures, this mean they can also take in RenderTextures! so you can draw on a 2D (or 3D) RenderTexture and have that be displayed on the 3D objects!
+
+RenderTexture example
+```cpp
+#include <SFML/Graphics.hpp>
+#include <SFML3D/SFML3D.hpp>
+
+int main()
+{
+
+    sf::RenderWindow3D window(sf::VideoMode(1080, 1080), "Game");
+    window.setFramerateLimit(120);
+
+    float camSpeed = 2.5;
+    float camRot = 60;
+    sf::View3D& camera = window.getView3D();
+    camera.setOrigin({0, 0, 3});
+    camera.setPosition({0, 0, 0});
+
+    sf::RenderTexture3D renderTexture;
+    renderTexture.create(500,500);
+
+    sf::Plane plane;
+    plane.setTexture(renderTexture.getTexture());
+
+    sf::Clock dtClock;
+    float deltaTime = 0;
+    float runtime = 0;
+    bool running = true;
+    while (running){
+        deltaTime = dtClock.restart().asSeconds();
+        runtime += deltaTime;
+    
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed) running = false;
+        }
+
+        float forward = sf::Keyboard::isKeyPressed(sf::Keyboard::S)-sf::Keyboard::isKeyPressed(sf::Keyboard::W);
+        float right = sf::Keyboard::isKeyPressed(sf::Keyboard::D)-sf::Keyboard::isKeyPressed(sf::Keyboard::A);
+        float up = sf::Keyboard::isKeyPressed(sf::Keyboard::E)-sf::Keyboard::isKeyPressed(sf::Keyboard::Q);
+
+        camera.rotate({forward*deltaTime*camRot, right*deltaTime*camRot, 0});
+        camera.setOrigin({0, 0, camera.getOrigin().z + up*deltaTime*camSpeed});
+
+        renderTexture.clear({50, 50, 50});
+
+        sf::CircleShape circle(20);
+        circle.setOrigin(20, 20);
+        circle.setFillColor({255, 0, 100});
+        circle.setPosition( sf::Vector2f{250, 250} + sf::Vector2f{cosf(runtime)*100, sinf(runtime)*100} );
+        renderTexture.draw(circle);
+
+        renderTexture.display();
+
+        window.clear();
+
+        window.draw(plane);
+
+        window.display();
+    }
+
+
+
+    return 0;
+}
+```
+
+# Credit
+[SFML](https://www.sfml-dev.org)
+
+[Opengl/glad](https://www.opengl.org) [Here's where I got the download](https://glad.dav1d.de)
+
+[Glm](https://glm.g-truc.net/0.9.9/index.html)
+
+[Maxwell the Cat(Creative Commons)](https://sketchfab.com/3d-models/maxwell-the-cat-dingus-2ca7f3c1957847d6a145fc35de9046b0)
+
+[Video of that random screenshot used in the cubes example (Idk why i used this)](https://www.youtube.com/watch?v=PmFk7M1NBfg)
