@@ -68,6 +68,7 @@ The library has simple shapes you can create, they are Cube, Cylinder, Plane and
 
 
 Cubes example
+![cubes](https://github.com/MrCheeseWasTaken/3D-For-SFML/blob/main/screenshots/cubes.png)
 ```cpp
 #include <SFML/Graphics.hpp>
 #include <SFML3D/SFML3D.hpp>
@@ -147,6 +148,7 @@ By default this will not load the textures, to load the textures, you also have 
 (Note) the passed in vector of textures will be cleared before being populated, so keep that in mind
 
 Model example
+![cat](https://github.com/MrCheeseWasTaken/3D-For-SFML/blob/main/screenshots/cat.png)
 ```cpp
 #include <SFML/Graphics.hpp>
 #include <SFML3D/SFML3D.hpp>
@@ -206,6 +208,7 @@ int main()
 As the 3D objects take in textures, this mean they can also take in RenderTextures! so you can draw on a 2D (or 3D) RenderTexture and have that be displayed on the 3D objects!
 
 RenderTexture example
+![rendertexture](https://github.com/MrCheeseWasTaken/3D-For-SFML/blob/main/screenshots/rendertexture.mp4)
 ```cpp
 #include <SFML/Graphics.hpp>
 #include <SFML3D/SFML3D.hpp>
