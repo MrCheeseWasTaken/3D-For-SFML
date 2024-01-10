@@ -2,7 +2,7 @@
 
 ```Disclaimer: The current state of the project is in early stage of development and therefore I do not recommend to use in projects```
 
-This a small 3D library I made using SFML 2.6 and Opengl
+This a small 3D library I made using SFML 2.6 and Opengl.
 I made this library to learn about 3D and therefore there will be some bugs
 
 The library was inspired by SFML so it uses many of bits of SFML
@@ -29,6 +29,7 @@ You can include the library as so
 before doing **anything**, please create a RenderWindow3D as this will setup opengl for 3D.
 
 (Note) RenderWindow3D and RenderTarget3D inherit from their 2D counterparts so they can still be used to draw 2D stuff. They are also initialised in the same way
+
 You will also have to create a bool variable that will be used for the main loop as window.isOpen() will cause some errors when closing the window
 
 ```cpp
@@ -64,7 +65,7 @@ int main(){
 
 The library has simple shapes you can create, they are Cube, Cylinder, Plane and SingleSidePlane
 
-They can scaled, rotated, moved and more:
+They can be scaled, rotated, moved and more:
 
 - setPosition(sf::Vec3f)
 - setRotation(sf::Vec3f)
@@ -154,7 +155,7 @@ int main()
 There is a Class called Model that you can use to load your model by using the LoadFromFile function that takes in an .obj file path.
 By default this will not load the textures, to load the textures, you also have to provide a vector of textures to the function that will populate it with textures.
 
-can be moved, scaled and roatated much lik shapes
+can be moved, scaled and roatated much like shapes. can set textures (setTextures), that takes in a vector of sf::Textures much like when loading
 
 (Note) the passed in vector of textures will be cleared before being populated, so keep that in mind
 
@@ -214,7 +215,7 @@ int main()
 }
 ```
 
-## Rendertextures as textures
+## Render textures as textures
 
 As the 3D objects take in textures, this mean they can also take in RenderTextures! so you can draw on a 2D (or 3D) RenderTexture and have that be displayed on the 3D objects!
 
@@ -290,6 +291,8 @@ int main()
 [SFML](https://www.sfml-dev.org)
 
 [Opengl/glad](https://www.opengl.org) | [Here's where I got the download](https://glad.dav1d.de)
+
+[OBJ-Loader by Bly7](https://github.com/Bly7/OBJ-Loader)
 
 [Glm](https://glm.g-truc.net/0.9.9/index.html)
 
