@@ -214,7 +214,7 @@ int main()
 }
 ```
 
-## Rendertextures as textures
+## Render textures as textures
 
 As the 3D objects take in textures, this mean they can also take in RenderTextures! so you can draw on a 2D (or 3D) RenderTexture and have that be displayed on the 3D objects!
 
