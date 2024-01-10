@@ -65,7 +65,7 @@ int main(){
 
 The library has simple shapes you can create, they are Cube, Cylinder, Plane and SingleSidePlane
 
-They can scaled, rotated, moved and more:
+They can be scaled, rotated, moved and more:
 
 - setPosition(sf::Vec3f)
 - setRotation(sf::Vec3f)
@@ -155,7 +155,7 @@ int main()
 There is a Class called Model that you can use to load your model by using the LoadFromFile function that takes in an .obj file path.
 By default this will not load the textures, to load the textures, you also have to provide a vector of textures to the function that will populate it with textures.
 
-can be moved, scaled and roatated much lik shapes
+can be moved, scaled and roatated much like shapes. can set textures (setTextures), that takes in a vector of sf::Textures much like when loading
 
 (Note) the passed in vector of textures will be cleared before being populated, so keep that in mind
 
