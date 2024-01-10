@@ -275,7 +275,7 @@ int main()
 # Credit
 [SFML](https://www.sfml-dev.org)
 
-[Opengl/glad](https://www.opengl.org) [Here's where I got the download](https://glad.dav1d.de)
+[Opengl/glad](https://www.opengl.org) | [Here's where I got the download](https://glad.dav1d.de)
 
 [Glm](https://glm.g-truc.net/0.9.9/index.html)
 
