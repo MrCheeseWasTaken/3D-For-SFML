@@ -17,4 +17,13 @@ If you clone this project an run Cmake it *should* just compile, but compilation
 
 as for the examples, create a SFML3D folder inside your lib directory, then you have to build the project once first, then inside the build directory and inside the SFML3D folder that should have created, drag the .dll.a into your lib/SFML3D folder. Then in the Cmakelists.txt, near the bottom, change the FALSE's of the if statements to TRUE for each example you want to compile
 
+# Simple Tutorial
 
+You can include the library as so
+```cpp
+#include <SFML3D/SFML3D.hpp>
+```
+before doing **anything**, please create a RenderWindow3D as this will setup opengl for 3D.
+(Note) RenderWindow3D and RenderTarget3D inherit from their 2D counterparts so they can still be used to draw 2D stuff. They are also initialised in the same way
+
+## Cubes
