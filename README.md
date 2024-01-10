@@ -208,7 +208,7 @@ int main()
 As the 3D objects take in textures, this mean they can also take in RenderTextures! so you can draw on a 2D (or 3D) RenderTexture and have that be displayed on the 3D objects!
 
 RenderTexture example
-![rendertexture](https://github.com/MrCheeseWasTaken/3D-For-SFML/blob/main/screenshots/rendertexture.mp4)
+![rendertexture]([https://github.com/MrCheeseWasTaken/3D-For-SFML/blob/main/screenshots/rendertexture.mp4](https://github.com/MrCheeseWasTaken/3D-For-SFML/blob/main/screenshots/texture.gif))
 ```cpp
 #include <SFML/Graphics.hpp>
 #include <SFML3D/SFML3D.hpp>
