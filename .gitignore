@@ -1,3 +1,6 @@
+lib/SFML3D
+build/
+
 # Prerequisites
 *.d
 
