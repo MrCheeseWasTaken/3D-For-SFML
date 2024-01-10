@@ -26,6 +26,9 @@ namespace sf{
         void setTextures(std::vector<Texture>& textures);
         std::vector<Texture*>& getTexturesPointers();
 
+        void setColor(const Color& color);
+        const Color& getColor() const;
+
     protected:
         void draw(RenderTarget3D& target, const RenderStates3D& states) const override;
 

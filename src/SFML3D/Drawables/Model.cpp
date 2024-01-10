@@ -146,6 +146,18 @@ namespace sf{
 
     }
 
+    void Model::setColor(const Color& color) {
+        
+        m_color = color;
+
+    }
+
+    const Color& Model::getColor() const {
+        
+        return m_color;
+
+    }
+
     void Model::draw(RenderTarget3D& target, const RenderStates3D& states) const {
     
         RenderStates3D stateCopy = states;
