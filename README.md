@@ -59,10 +59,13 @@ int main(){
   return 0;
 
 }
-
+```
 ## Simple Shapes
 
 The library has simple shapes you can create, they are Cube, Cylinder, Plane and SingleSidePlane
+
+(Note) In the cubes example, the first cube created is given a texture using setTexture, but you'll see that the cube isn't correctly mapped on all faces, only the back and front. This is because the cube used only has 8 vertices and therefore does not have enough vertices to correctly map all 6 sides
+
 
 Cubes example
 ```cpp
@@ -135,4 +138,65 @@ int main()
     return 0;
 }
 
+```
+## Custom Models (.obj only)
+
+There is a Class called Model that you can use to load your model by using the LoadFromFile function that takes in an .obj file path.
+By default this will not load the textures, to load the textures, you also have to provide a vector of textures to the function that will populate it with textures.
+
+(Note) the passed in vector of textures will be cleared before being populated, so keep that in mind
+
+Model example
+```cpp
+#include <SFML/Graphics.hpp>
+#include <SFML3D/SFML3D.hpp>
+
+int main()
+{
+
+    sf::RenderWindow3D window(sf::VideoMode(1080, 1080), "Game");
+    window.setFramerateLimit(120);
+
+    float camSpeed = 2.5;
+    float camRot = 60;
+    sf::View3D& camera = window.getView3D();
+    camera.setOrigin({0, 0, 3});
+    camera.setPosition({0, 0, 0});
+
+    std::vector<sf::Texture> textures;
+
+    sf::Model model;
+    model.loadFromFile("res/Maxwell/cat.obj", textures);
+    model.setScale({.5, .5, .5});
+
+    sf::Clock dtClock;
+    float deltaTime = 0;
+    bool running = true;
+    while (running){
+        deltaTime = dtClock.restart().asSeconds();
+    
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed) running = false;
+        }
+
+        float forward = sf::Keyboard::isKeyPressed(sf::Keyboard::S)-sf::Keyboard::isKeyPressed(sf::Keyboard::W);
+        float right = sf::Keyboard::isKeyPressed(sf::Keyboard::D)-sf::Keyboard::isKeyPressed(sf::Keyboard::A);
+        float up = sf::Keyboard::isKeyPressed(sf::Keyboard::E)-sf::Keyboard::isKeyPressed(sf::Keyboard::Q);
+
+        camera.rotate({forward*deltaTime*camRot, right*deltaTime*camRot, 0});
+        camera.setOrigin({0, 0, camera.getOrigin().z + up*deltaTime*camSpeed});
+
+        window.clear();
+
+        window.draw(model);
+
+        window.display();
+    }
+
+
+
+    return 0;
+}
 ```
