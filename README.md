@@ -64,6 +64,15 @@ int main(){
 
 The library has simple shapes you can create, they are Cube, Cylinder, Plane and SingleSidePlane
 
+They can scaled, rotated, moved and more:
+
+- setPosition(sf::Vec3f)
+- setRotation(sf::Vec3f)
+- setScale(sf::Vec3f)
+- setColor(sf::Color)
+- setTexture(sf::Texture)
+- setTextureFlip(bool)
+
 (Note) In the cubes example, the first cube created is given a texture using setTexture, but you'll see that the cube isn't correctly mapped on all faces, only the back and front. This is because the cube used only has 8 vertices and therefore does not have enough vertices to correctly map all 6 sides
 
 
@@ -145,6 +154,8 @@ int main()
 There is a Class called Model that you can use to load your model by using the LoadFromFile function that takes in an .obj file path.
 By default this will not load the textures, to load the textures, you also have to provide a vector of textures to the function that will populate it with textures.
 
+can be moved, scaled and roatated much lik shapes
+
 (Note) the passed in vector of textures will be cleared before being populated, so keep that in mind
 
 Model example
@@ -208,7 +219,7 @@ int main()
 As the 3D objects take in textures, this mean they can also take in RenderTextures! so you can draw on a 2D (or 3D) RenderTexture and have that be displayed on the 3D objects!
 
 RenderTexture example
-![rendertexture](https://github.com/MrCheeseWasTaken/3D-For-SFML/blob/main/screenshots/rendertexture.mp4)
+![rendertexture](https://github.com/MrCheeseWasTaken/3D-For-SFML/blob/main/screenshots/texture.gif)
 ```cpp
 #include <SFML/Graphics.hpp>
 #include <SFML3D/SFML3D.hpp>
