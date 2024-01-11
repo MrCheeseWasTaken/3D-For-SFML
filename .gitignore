@@ -1,5 +1,7 @@
 lib/SFML3D
 build/
+sandbox/
+.vscode/
 
 # Prerequisites
 *.d
