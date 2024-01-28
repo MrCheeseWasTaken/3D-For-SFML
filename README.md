@@ -8,6 +8,8 @@ I made this library to learn about 3D and therefore there will be some bugs
 The library was inspired by SFML so it uses many of bits of SFML
 
 # Usage
+This assumes you already of sfml 2.6+ (idk if lower versions will work) included into your project
+
 1) Download the release
 2) Drag all the includes to your include folder, same with the libs
 3) Drag the dll file inside bin into the build directory of your project
