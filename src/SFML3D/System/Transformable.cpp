@@ -2,12 +2,17 @@
 
 #include <glm/gtx/euler_angles.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/matrix_decompose.hpp>
+
+#include <SFML3D/System/Math.hpp>
+
+#include <iostream>
 
 namespace sf{
 
     void Transformable3D::combine(const Transformable3D& other) {
         
-        m_transform.combine(other.getTransform());
+        m_transform *= other.getTransform();
         m_transformNeedsUpdate = true;
 
     }
@@ -28,7 +33,11 @@ namespace sf{
 
     void Transformable3D::setRotation(const Vec3f& rotation) {
         
-        m_rotation = rotation;
+        m_rotation = {
+            fmod(360 + fmod(rotation.x, 360), 360),
+            fmod(360 + fmod(rotation.y, 360), 360),
+            fmod(360 + fmod(rotation.z, 360), 360)
+        };
         m_transformNeedsUpdate = true;
 
     }
@@ -40,25 +49,44 @@ namespace sf{
 
     }
 
-    const Vec3f Transformable3D::getPosition() const {
+    void Transformable3D::setTransform(const Mat4& transform) {
+        
+        glm::vec3 scale;
+        glm::vec3 translation;
+        glm::quat orientation;
+        glm::vec3 skew;
+        glm::vec4 proj;
+
+        glm::decompose(transform, scale, orientation, translation, skew, proj);
+
+        glm::vec3 rotation = glm::eulerAngles(orientation);
+        rotation = glm::degrees(rotation);
+
+        setPosition(translation);
+        setScale(scale);
+        setRotation(rotation);
+
+    }
+
+    const Vec3f& Transformable3D::getPosition() const {
         
         return m_position;
 
     }
 
-    const Vec3f Transformable3D::getOrigin() const {
+    const Vec3f& Transformable3D::getOrigin() const {
         
         return m_origin;
 
     }
 
-    const Vec3f Transformable3D::getRotation() const {
+    const Vec3f& Transformable3D::getRotation() const {
         
         return m_rotation;
 
     }
 
-    const Vec3f Transformable3D::getScale() const {
+    const Vec3f& Transformable3D::getScale() const {
         
         return m_scale;
 
@@ -82,7 +110,6 @@ namespace sf{
 
     }
 
-    //chatgpt clutched
     const Vec3f Transformable3D::GetForward(const Vec3f& rotation, bool inversed) {
         
         Vec3f rotRad = glm::radians(rotation);
@@ -116,6 +143,14 @@ namespace sf{
 
     }
 
+    const Vec3f Transformable3D::getActualPosition() const {
+        
+        getTransform();
+
+        return m_transform[3];
+
+    }
+
     void Transformable3D::move (const Vec3f& offset) {
         
         setPosition(m_position + offset);
@@ -134,7 +169,31 @@ namespace sf{
 
     }
 
-    const Transform3D& Transformable3D::getTransform() const {
+    void Transformable3D::orient(const Vec3f& orientation) {
+        
+        getTransform();
+
+        Vec3f oRadians = glm::radians(orientation);
+        Vec3f rRadians = glm::radians(m_rotation);
+        
+        glm::quat q = glm::quat(rRadians) * glm::quat(oRadians);
+
+        setRotation(glm::degrees( glm::eulerAngles(q) ));
+
+    }
+
+    void Transformable3D::lookAt(const Vec3f& target, const Vec3f& up) {
+
+        Vec3f direction = glm::normalize(m_position-target);
+        if (glm::length(m_position-target) < .005f) direction = {0, 0, -1};
+
+        glm::quat q = glm::quatLookAt(direction, up);
+
+        setRotation(glm::degrees( glm::eulerAngles(q) ));
+
+    }
+
+    const Mat4& Transformable3D::getTransform() const {
         
         if (m_transformNeedsUpdate){
 
@@ -150,8 +209,8 @@ namespace sf{
             // translation then rotation then scale, why? idfk
             result = translation * rotation * origin * scale;
 
-            m_transform = Transform3D(result);
-            m_inverseTransform = m_transform.getInverse();
+            m_transform = result;
+            m_inverseTransform = glm::inverse(m_transform);
             m_transformNeedsUpdate = false;
 
         }
@@ -160,11 +219,17 @@ namespace sf{
 
     }
 
-    const Transform3D& Transformable3D::getInverseTransform() const {
+    const Mat4& Transformable3D::getInverseTransform() const {
 
         if (m_transformNeedsUpdate) getTransform();
         
         return m_inverseTransform;
+
+    }
+
+    bool Transformable3D::getNeedUpdate() const {
+        
+        return m_transformNeedsUpdate;
 
     }
 

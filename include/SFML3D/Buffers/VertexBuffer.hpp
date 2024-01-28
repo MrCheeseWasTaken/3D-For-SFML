@@ -7,13 +7,13 @@ namespace sf{
 
 	class Vertex3D;
 
-	class VertexBuffer3D
+	class VBO3D
 	{
 	public:
 		GLuint ID=0;
 
-		VertexBuffer3D();
-		VertexBuffer3D(const GLuint ID);
+		VBO3D();
+		VBO3D(const GLuint ID);
 
 		void Create(GLfloat* vertices, GLsizeiptr size, int useType = GL_STATIC_DRAW);
 		void Create(const std::vector<Vertex3D>& vertices, int useType = GL_STATIC_DRAW);

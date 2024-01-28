@@ -2,6 +2,8 @@
 
 #include <glm/gtx/euler_angles.hpp>
 
+#include<iostream>
+
 namespace sf{
 
     View3D::View3D(const Vec3f& position, float fov) {
@@ -51,15 +53,8 @@ namespace sf{
 
     const Mat4& View3D::getViewMatrix() {
         
-        if (m_matrixNeedsUpdate or true){
-
-            Transformable3D::setScale({1, 1, 1});
-
-            m_viewMatrix = Transformable3D::getInverseTransform();
-
-            m_matrixNeedsUpdate = false;
-
-        }
+        if (getScale() != Vec3f{1, 1, 1}) Transformable3D::setScale({1, 1, 1});
+        m_viewMatrix = Transformable3D::getInverseTransform();
 
         return m_viewMatrix;
 

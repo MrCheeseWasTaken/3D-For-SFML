@@ -8,6 +8,11 @@
 #include <SFML3D/System/RenderStates.hpp>
 #include <SFML3D/System/RenderTarget.hpp>
 
+#include "SFML3D/Buffers/IndexBuffer.hpp"
+#include "SFML3D/Buffers/VertexArray.hpp"
+#include "SFML3D/Buffers/VertexBuffer.hpp"
+#include "SFML3D/Buffers/InstanceBuffer.hpp"
+
 sf::Vec3f v3ToVec3(const objl::Vector3& vec){
     return {vec.X, vec.Y, vec.Z};
 }
@@ -31,20 +36,20 @@ namespace sf{
 
     }
 
-    bool Model::loadFromFile(const std::string& filename) {
+    bool Model::loadFromFile(const std::string& filename, unsigned int numOfInstances) {
         
         std::vector<Texture> dummyVector;
-        return p_loadFromFile(filename, dummyVector, false);
+        return p_loadFromFile(filename, dummyVector, false, numOfInstances);
 
     }
 
-    bool Model::loadFromFile(const std::string& filename, std::vector<Texture>& textures) {
+    bool Model::loadFromFile(const std::string& filename, std::vector<Texture>& textures, unsigned int numOfInstances) {
         
-        return p_loadFromFile(filename, textures, true);
+        return p_loadFromFile(filename, textures, true, numOfInstances);
 
     }
 
-    bool Model::p_loadFromFile(const std::string& filename, std::vector<Texture>& textures, const bool loadTextures) {
+    bool Model::p_loadFromFile(const std::string& filename, std::vector<Texture>& textures, const bool loadTextures, unsigned int numOfInstances) {
 
         if (loadTextures){
             textures.clear();
@@ -102,6 +107,7 @@ namespace sf{
                 vertex.position = v3ToVec3(currentMesh.Vertices[i].Position);
                 vertex.uv = v2ToVec2(currentMesh.Vertices[i].TextureCoordinate);
                 vertex.texID = textureId;
+                vertex.normal = v3ToVec3(currentMesh.Vertices[i].Normal);
 
                 vertices.push_back(vertex);
 
@@ -120,14 +126,18 @@ namespace sf{
         m_vao.Create();
         m_vbo.Create(vertices);
         m_ebo.Create(indices);
+        m_ibo.Create(numOfInstances);
 
         m_vao.SetupVertexBufferAttrib(m_vbo);
+        m_vao.setupInstanceBufferAttrib(m_ibo);
 
         m_vao.Unbind();
         m_vbo.Unbind();
         m_ebo.Unbind();
+        m_ibo.Unbind();
 
         m_numOfIndices = indices.size();
+        numOfInstances = numOfInstances;
 
         return true;
 
@@ -167,6 +177,16 @@ namespace sf{
         for (auto tex : m_textures) stateCopy.textures.push_back(tex);
 
         target.draw(m_vao, m_numOfIndices, stateCopy);
+
+    }
+
+    void Model::drawInstance(RenderTarget3D& target, const InstanceData* InstanceData, unsigned int instanceCount, const RenderStates3D& states) const {
+        
+        RenderStates3D stateCopy = states;
+        stateCopy.textures.clear();
+        for (auto tex : m_textures) stateCopy.textures.push_back(tex);
+
+        target.drawInstanced(m_vao, m_numOfIndices, m_ibo, InstanceData, instanceCount, stateCopy);
 
     }
 

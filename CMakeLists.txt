@@ -1,4 +1,7 @@
 cmake_minimum_required(VERSION 3.21)
+
+set(SANDBOX_ON TRUE)
+
 set(PROJECT_NAME sfml3D)
 project(${PROJECT_NAME} VERSION 1.0.0 LANGUAGES CXX)
 
@@ -33,6 +36,27 @@ file(GLOB_RECURSE lib_files
 set(SOURCES ${source_files})
 set(CMAKE_CXX_STANDARD 17)
 
+if (${SANDBOX_ON})
+
+
+   set(SandboxName game)
+
+   file(GLOB_RECURSE sandbox_source
+      ${source_files}
+      sandbox/src/**.cpp
+      sandbox/src/**.hpp
+   )
+
+   add_executable(${SandboxName} ${sandbox_source})
+   target_include_directories(${SandboxName} PRIVATE "include" "src" "sandbox/src")
+   target_link_libraries(${SandboxName} ${lib_files})
+
+   file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/res" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+   RETURN()
+   
+endif()
+
 #----------------------Static--------------------------#
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/SFML3D)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/SFML3D)
@@ -43,7 +67,7 @@ add_library(${StaticName} STATIC ${SOURCES})
 target_include_directories(${StaticName} PRIVATE "include" "src")
 target_link_libraries(${StaticName} ${lib_files})
 
-#----------------------Dynamic-------------------------#
+# #----------------------Dynamic-------------------------#
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/SFML3D)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/SFML3D)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/SFML3D)

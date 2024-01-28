@@ -20,9 +20,18 @@ namespace sf{
         stateCopy.color = Shape3D::getColor();
         if (Shape3D::hasTexture()) stateCopy.textures.push_back(&Shape3D::getTexture());
         stateCopy.flipTexture = Shape3D::getFlipTexture();
-        stateCopy.depthTest = Shape3D::getDepthTest();
 
         target.draw(sf::RenderTarget3D::Cylinder, stateCopy);
+
+    }
+
+    void Cylinder::drawInstance(RenderTarget3D& target, const InstanceData* InstanceData, unsigned int instanceCount, const RenderStates3D& states) const {
+        
+        RenderStates3D stateCopy = states;
+        if (Shape3D::hasTexture()) stateCopy.textures.push_back(&Shape3D::getTexture());
+        stateCopy.flipTexture = Shape3D::getFlipTexture();
+
+        target.drawInstanced(sf::RenderTarget3D::Cylinder, InstanceData, instanceCount, stateCopy);
 
     }
 

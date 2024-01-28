@@ -5,13 +5,13 @@
 
 namespace sf{
 
-	class IndexBuffer3D
+	class EBO3D
 	{
 	public:
 		GLuint ID=0;
 
-		IndexBuffer3D();
-		IndexBuffer3D(const GLuint ID);
+		EBO3D();
+		EBO3D(const GLuint ID);
 
 		void Create(GLuint* indices, GLsizeiptr size, int useType = GL_STATIC_DRAW);
 		void Create(const std::vector<unsigned int>& indices, int useType = GL_STATIC_DRAW);

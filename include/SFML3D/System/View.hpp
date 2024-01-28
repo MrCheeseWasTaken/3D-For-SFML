@@ -33,13 +33,12 @@ namespace sf{
         // Vec3f m_rotation;
         float m_fov = 60;
         float m_minClip = 0.1;
-        float m_maxClip = 100;
+        float m_maxClip = 500;
         Vector2f m_orthoSize{1, 1};
         bool m_orthographic = false;
         float aspectRatio = 1;
 
         mutable Mat4 m_viewMatrix;
-        mutable bool m_matrixNeedsUpdate{true};
 
     };
 

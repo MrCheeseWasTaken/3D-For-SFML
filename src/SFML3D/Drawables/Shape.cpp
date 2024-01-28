@@ -20,12 +20,6 @@ namespace sf{
 
     }
 
-    void Shape3D::setDepthTest(bool depthTest) {
-        
-        m_depthTest = depthTest;
-
-    }
-
     const Color& Shape3D::getColor() const {
         
         return m_color;
@@ -47,12 +41,6 @@ namespace sf{
     const bool Shape3D::getFlipTexture() const {
         
         return m_flipTexture;
-
-    }
-
-    const bool Shape3D::getDepthTest() const {
-        
-        return m_depthTest;
 
     }
 
